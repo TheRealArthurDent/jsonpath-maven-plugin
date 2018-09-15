@@ -3,7 +3,7 @@
 
     <groupId>io.github.therealarthurdent</groupId>
     <artifactId>jsonpath-maven-plugin</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
 
     <packaging>maven-plugin</packaging>
 
@@ -32,7 +32,7 @@
         <connection>scm:git:https://github.com/TheRealArthurDent/jsonpath-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:TheRealArthurDent/jsonpath-maven-plugin.git</developerConnection>
         <url>https://github.com/TheRealArthurDent/jsonpath-maven-plugin</url>
-        <tag>HEAD</tag>
+        <tag>jsonpath-maven-plugin-0.0.2</tag>
     </scm>
 
     <properties>
