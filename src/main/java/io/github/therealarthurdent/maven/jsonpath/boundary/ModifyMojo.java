@@ -1,5 +1,6 @@
 package io.github.therealarthurdent.maven.jsonpath.boundary;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.jayway.jsonpath.DocumentContext;
@@ -20,6 +21,8 @@ import java.util.List;
 @Mojo(name = "modify", defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 public class ModifyMojo extends AbstractMojo {
 
+    private static final String JSON_NODE = "jsonNode";
+
     @Parameter(property = "jsonpath.outputFile", required = false)
     private String outputFile;
 
@@ -37,7 +40,13 @@ public class ModifyMojo extends AbstractMojo {
 
         for (Modification modification : this.modifications) {
             final String path = modification.getPath();
-            final String value = modification.getValue();
+            final String rawValue = modification.getValue();
+            final Object value;
+            if (rawValue.startsWith(JSON_NODE)) {
+                value = this.parseJsonNode(rawValue);
+            } else {
+                value = rawValue;
+            }
             if (modification.isAddModification()) {
                 final String key = modification.getKey();
                 json.put(path, key, value);
@@ -62,6 +71,16 @@ public class ModifyMojo extends AbstractMojo {
             throw new MojoExecutionException("No modifications were defined");
         }
         this.getLog().info(count + " modifications written to json file " + outputJson);
+    }
+
+    protected JsonNode parseJsonNode(String value) throws MojoExecutionException {
+        JsonNode node = null;
+        try {
+            node = new ObjectMapper().readTree(value.substring(JSON_NODE.length() + 1));
+        } catch (IOException e) {
+            throw new MojoExecutionException("Unable to parse " + JSON_NODE + ": " + value, e);
+        }
+        return node;
     }
 
 }

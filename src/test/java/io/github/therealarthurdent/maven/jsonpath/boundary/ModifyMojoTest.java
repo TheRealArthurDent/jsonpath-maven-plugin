@@ -39,7 +39,8 @@ public class ModifyMojoTest {
 
         List<Modification> modifications = Arrays.asList(
                 new ModificationBuilder().withPath("$.root.branch_1[:1]").withValue("leaf_1.1_changed").build(),
-                new ModificationBuilder().withPath("$.root").withKey("branch_3").withValue("branch_3_added").build());
+                new ModificationBuilder().withPath("$.root").withKey("branch_3").withValue("branch_3_added").build(),
+                new ModificationBuilder().withPath("$.root").withKey("branch_4").withValue("jsonNode:{\"leaf1\":\"1\",\"leaf2\":\"2\"}").build());
 
         InjectionHelper.inject(this.mojo, "modifications", modifications);
 
@@ -50,6 +51,7 @@ public class ModifyMojoTest {
         assertThat(outFileString).isNotEmpty();
         assertThat(outFileString).contains("\"branch_3\":\"branch_3_added\"");
         assertThat(outFileString).contains("\"leaf_1.1_changed\"");
+        assertThat(outFileString).contains("\"branch_4\":{\"leaf1\":\"1\",\"leaf2\":\"2\"}");
         assertThat(outFileString).doesNotContain("\"leaf_1.1\"");
     }
 
