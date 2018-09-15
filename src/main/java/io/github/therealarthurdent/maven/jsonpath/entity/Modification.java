@@ -1,6 +1,5 @@
 package io.github.therealarthurdent.maven.jsonpath.entity;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugins.annotations.Parameter;
 
 public class Modification {
@@ -26,6 +25,6 @@ public class Modification {
     }
 
     public boolean isAddModification() {
-        return StringUtils.isNotEmpty(this.key);
+        return this.key != null && !this.key.isEmpty();
     }
 }
