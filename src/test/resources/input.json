@@ -1,0 +1,25 @@
+{
+  "root": {
+    "branch_1": [
+      "leaf_1.1",
+      "leaf_1.2"
+    ],
+    "branch_2": [
+      "leaf_2.1",
+      "leaf_2.2"
+    ],
+    "properties": {
+      "testProperty1": "propertyValue1",
+      "testProperty2": 42,
+      "testPropertyComplex": {
+        "value1": "test",
+        "value2": 4711,
+        "value3": [
+          1,
+          2,
+          3
+        ]
+      }
+    }
+  }
+}
